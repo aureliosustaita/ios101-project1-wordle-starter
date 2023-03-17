@@ -30,13 +30,14 @@ class BoardController: NSObject,
     super.init()
     collectionView.delegate = self
     collectionView.dataSource = self
+//    print("Goal word: \(goalWord.joined())")
   }
 
   // MARK: - Public Methods
-  func enter(_ character: String) {
+  func enter(_ string: String) {
     guard numGuesses < numItemsPerRow * numRows else { return }
     let cell = collectionView.cellForItem(at: IndexPath(item: numGuesses, section: 0)) as! LetterCell
-    cell.set(letter: Character(character))
+    cell.set(letter: string)
     UIView.animate(withDuration: 0.1,
                    delay: 0.0,
                    options: [.autoreverse],
@@ -46,6 +47,7 @@ class BoardController: NSObject,
       // Checkpoint: After finishing this exercise, you should now be able to see that the board animates whenever you enter a new letter! If it's not animating, check your work on this exercise.
       // START YOUR CODE HERE
       // ...
+      cell.transform = cell.transform.scaledBy(x: 1.05, y: 1.05)
       // END YOUR CODE HERE
     }, completion: { finished in
       cell.transform = CGAffineTransformIdentity
@@ -65,6 +67,8 @@ class BoardController: NSObject,
     // Checkpoint: After finishing this exercise, you should now be able to tap on the delete keyboard cell and have the last letter deleted on the board! If it's not working, check your work on this exercise and make sure deleteLastCharacter() is called properly in exercise 3.
     // START YOUR CODE HERE
     // ...
+    cell.clearLetter()
+    cell.set(style: .initial)
     // END YOUR CODE HERE
   }
 }
